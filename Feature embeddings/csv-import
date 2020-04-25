@@ -1,0 +1,12 @@
+import pickle
+import csv
+
+datafile ='/Users/Triin/Desktop/feature_dict.p'
+
+feature_dict = pickle.load(open(datafile, 'rb'))
+
+with open('/Users/Triin/Desktop/output.csv', mode='w') as csv_file:
+    writer = csv.writer(csv_file)
+    for key, val in feature_dict.items():
+        writer.writerow([[val]+[key]])
+    csv_file.close()
