@@ -1,0 +1,6 @@
+LOAD CSV FROM 'file:///output7.csv' AS row FIELDTERMINATOR ']'
+WITH row[0] AS vec, row[1] AS path
+MERGE (i:Image {path: path})
+  SET i.path= path, i.vec = split(vec, ',')
+  SET i.vec= [item in n.vec | apoc.convert.toFloat(item)]
+RETURN count(i)
