@@ -1,0 +1,20 @@
+//euclidean
+MATCH (p1:Image {path: ",/content/101_ObjectCategories/llama/image_0010.jpg"})
+MATCH (p2:Image {path:",/content/101_ObjectCategories/llama/image_0001.jpg"})
+ RETURN p1.path AS from,
+        p2.path AS to,
+        gds.alpha.similarity.euclidean (p1.vec, p2.vec) AS similarity
+
+//cosine
+MATCH (p1:Image {path: ",/content/101_ObjectCategories/llama/image_0010.jpg"})
+MATCH (p2:Image {path:",/content/101_ObjectCategories/llama/image_0001.jpg"})
+ RETURN p1.path AS from,
+        p2.path AS to,
+        gds.alpha.similarity.cosine (p1.vec, p2.vec) AS similarity
+        
+//jaccard
+MATCH (p1:Image {path: ",/content/101_ObjectCategories/llama/image_0010.jpg"})
+MATCH (p2:Image {path:",/content/101_ObjectCategories/llama/image_0001.jpg"})
+ RETURN p1.path AS from,
+        p2.path AS to,
+        gds.alpha.similarity.jaccard (p1.vec, p2.vec) AS similarity
