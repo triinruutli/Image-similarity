@@ -1,0 +1,16 @@
+CALL apoc.trigger.add('CRS',"UNWIND {createdNodes} AS node
+MATCH (p:Image)-[r:SIMILAR20]->()
+Delete r
+WITH collect({item:id(p), weights:p.vec}) as data
+CALL gds.alpha.similarity.cosine.write({
+nodeProjection: '*',
+  relationshipProjection: '*',
+  topK:20, 
+  data:data,
+  showComputations: true, 
+  writeRelationshipType:'SIMILAR20'
+})
+YIELD nodes, similarityPairs, computations
+RETURN nodes, 
+       apoc.number.format(similarityPairs) AS similarityPairs, 
+       apoc.number.format(computations) AS computations", {phase:'after'})
