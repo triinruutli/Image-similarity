@@ -1,0 +1,16 @@
+MATCH (p:Image)
+ WITH {item:id(p), weights: p.vec} AS userData
+ WITH collect(userData) AS data
+ CALL gds.alpha.ml.ann.write({
+   nodeProjection: '*',
+   relationshipProjection: '*',
+   data: data,
+   topK:20,
+   algorithm: 'cosine',
+   writeRelationshipType:"SIMILAR_APPROX",
+   similarityCutoff: 0.1,
+   concurrency: 1
+ })
+ YIELD nodes, similarityPairs, computations
+RETURN nodes
+
